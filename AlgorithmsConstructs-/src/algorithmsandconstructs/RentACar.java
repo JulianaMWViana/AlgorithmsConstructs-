@@ -39,9 +39,8 @@ public class RentACar implements RentACarInterface {
         boolean available = false;
         for (int i = 0; i < cars.size(); i++) {
             if (cars.get(i).getMake().equals(make)) {
-                boolean[] days = cars.get(i).getAvailability().get(month);
-                for (int j = day - 1; j < lengthOfRent; j++) {
-                    if (days[j] == false) {
+                for (int j = day; j <= lengthOfRent; j++) {
+                    if (cars.get(i).isAvailable(month, j - 1)) {
                         available = true;
                         availableCarId = cars.get(i).getId();
                     } else {
@@ -69,6 +68,17 @@ public class RentACar implements RentACarInterface {
 
     @Override
     public boolean bookCar(Month month, int day, Make make, int lengthOfRent) {
+        if (checkAvailability(month, day, make, lengthOfRent)) {
+            for (CarInterface car : cars) {
+                if(car.getId() == availableCarId){
+                    for (int i = day; i <= lengthOfRent; i++) {
+                        car.book(month, i - 1);
+                    }
+                    break;
+                }
+            }
+            return true;
+        }
         return false;
     }
 

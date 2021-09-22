@@ -35,12 +35,7 @@ public class BookingSystem implements BookingSystemInterface {
                     id++;
                     car.setMake(Make.valueOf(values[0]));
                     car.setRate(Double.valueOf(values[1]));
-                    
-                    Map<Month, boolean[]> availability = new HashMap<>();
-                    for (Month month : Month.values()) {
-                        availability.put(month, new boolean[month.getNumberOfDays()]);
-                    }
-                    car.setAvailability(availability);
+                    car.createAvailability();
                     cars.add(car);
                 }
                 rentACar.setCars(cars);

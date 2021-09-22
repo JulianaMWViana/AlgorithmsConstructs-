@@ -2,6 +2,7 @@ package algorithmsandconstructs;
 
 import algorithmsandconstructs.enums.Make;
 import algorithmsandconstructs.enums.Month;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -56,17 +57,23 @@ public class Car implements CarInterface {
 
     @Override
     public Map<Month, boolean[]> createAvailability() {
+        this.availability = new HashMap<>();
+        for (Month month : Month.values()) {
+            availability.put(month, new boolean[month.getNumberOfDays()]);
+        }
         return null;
     }
 
     @Override
     public boolean isAvailable(Month month, int day) {
-        return false;
+        boolean[] days = this.availability.get(month);
+        return !days[day];
     }
 
     @Override
     public boolean book(Month month, int day) {
-        return false;
+        boolean[] days = this.availability.get(month);
+        return days[day] = true;
     }
 
 }
