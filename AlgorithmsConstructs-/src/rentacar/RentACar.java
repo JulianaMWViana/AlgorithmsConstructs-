@@ -34,18 +34,19 @@ public class RentACar {
         RentACarInterface rentACar = bookingSystem.setupRentACar(in);
 
         // Get the name of the car rental
-        System.out.println(rentACar.getName());
-        
+        System.out.println("Name of the company: " + rentACar.getName());
+
         // Print the number of cars in the rent-a-car
-        System.out.println(rentACar.getNumberOfCars());  
-        
+        System.out.println("Number of cars: " + rentACar.getNumberOfCars());
+
         // Check if there is a BMW car available for 5 days from the 1st
         // of January
-        System.out.println(rentACar.checkAvailability(Month.JANUARY, 1, Make.BMW, 5)); 
-        
+        System.out.println("BMW car available for 5 days from the 1st of January: "
+                + rentACar.checkAvailability(Month.JANUARY, 1, Make.BMW, 5));
+
         // Get the id of the car available
-        System.out.println(rentACar.getCarAvailable(Month.JANUARY, 1, Make.BMW, 5));
-        
+        System.out.println("Id of the car available: " + rentACar.getCarAvailable(Month.JANUARY, 1, Make.BMW, 5));
+
         // Try some bookings
         System.out.println(rentACar.bookCar(Month.JANUARY, 1, Make.BMW, 5));
         System.out.println(rentACar.bookCar(Month.JANUARY, 1, Make.BMW, 5));

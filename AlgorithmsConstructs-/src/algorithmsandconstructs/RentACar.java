@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class RentACar implements RentACarInterface {
 
+    private static Integer availableCarId = null;
     private List<CarInterface> cars;
     private String name;
 
@@ -35,12 +36,35 @@ public class RentACar implements RentACarInterface {
 
     @Override
     public boolean checkAvailability(Month month, int day, Make make, int lengthOfRent) {
-        return false;
+        boolean available = false;
+        for (int i = 0; i < cars.size(); i++) {
+            if (cars.get(i).getMake().equals(make)) {
+                boolean[] days = cars.get(i).getAvailability().get(month);
+                for (int j = day - 1; j < lengthOfRent; j++) {
+                    if (days[j] == false) {
+                        available = true;
+                        availableCarId = cars.get(i).getId();
+                    } else {
+                        available = false;
+                        availableCarId = null;
+                        break;
+                    }
+                }
+                if (available) {//searches are no longer needed
+                    break;
+                }
+            }
+        }
+        return available;
     }
 
     @Override
     public int getCarAvailable(Month month, int day, Make make, int lengthOfRent) {
-        return 0;
+        //Month.JANUARY, 1, Make.BMW, 5
+        if (checkAvailability(month, day, make, lengthOfRent)) {
+            return availableCarId;
+        }
+        return availableCarId;
     }
 
     @Override
@@ -53,5 +77,4 @@ public class RentACar implements RentACarInterface {
         return cars.size();
     }
 
-    
 }
